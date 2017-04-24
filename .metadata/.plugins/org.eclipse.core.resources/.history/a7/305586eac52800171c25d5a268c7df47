@@ -1,0 +1,11 @@
+import MatrixUtil.*;
+
+public class Main {
+	public static void main(String[] args) throws InvalidMoveException {
+		Matrix x = new Matrix(new int[][] {{3,2,1,4}, {0,2,2,4}, {0,0,3,4},{0,0,3,5}});
+		System.out.println(x);
+		System.out.println("Determinan: " + x.getDeterminant());
+		Matrix cofactor = x.getCofactor();
+		System.out.println("Selesai!");
+	}
+}

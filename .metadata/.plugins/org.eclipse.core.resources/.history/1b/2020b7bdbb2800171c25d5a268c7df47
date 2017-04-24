@@ -1,0 +1,5 @@
+package MatrixUtil;
+
+public class InvalidMoveException extends Exception {
+
+}

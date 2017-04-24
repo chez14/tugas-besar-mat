@@ -1,0 +1,10 @@
+import MatrixUtil.*;
+
+public class Main {
+	public static void main(String[] args) throws InvalidMoveException {
+		Matrix x = new Matrix(new int[][] {{3,2,1}, {0,2,2}, {0,0,3}});
+		System.out.println(x);
+		System.out.println("Determinan: " + x.getDeterminant());
+		System.out.println("Selesai!");
+	}
+}

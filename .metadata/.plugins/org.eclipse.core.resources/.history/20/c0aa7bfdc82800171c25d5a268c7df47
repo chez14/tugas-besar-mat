@@ -1,0 +1,38 @@
+package MatrixUtil;
+/**
+ * This class are actually intended to prettify the matrix printing on the console.
+ * 
+ * @version v0.1.1-alpha1
+ * @author Chris(2016730011)
+ * @author Irvan(201673077)
+ */
+final class Prettify {
+	public static int countSingleDigitSpace(Matrix korban){
+		int[][] matrixnya = korban.toIntArray();
+		
+		int maxSingleSize = 1, maxSize=matrixnya[0][0];
+		
+		for(int[] row : matrixnya){
+			for(int col : row){
+				
+			}
+		}
+		
+		return maxSingleSize;
+	}
+	
+	
+	/**
+	 * This will count the digit of the integer.
+	 * @param i digit that will be counted
+	 * @return digits
+	 */
+	public static int getDigit(int i){
+		int temp=1;
+		while((i /= 10) > 0)
+			temp++;
+		return temp;
+	}
+	
+	
+}

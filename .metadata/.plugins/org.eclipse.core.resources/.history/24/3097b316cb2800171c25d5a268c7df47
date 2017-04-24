@@ -1,0 +1,53 @@
+package MatrixUtil;
+/**
+ * This class are actually intended to prettify the matrix printing on the console.
+ * 
+ * @version v0.1.1-alpha1
+ * @author Chris(2016730011)
+ * @author Irvan(201673077)
+ */
+final class Prettify {
+	/**
+	 * A method to count the maximum required size of single item for the matrix.
+	 * so the printing will be smoothly formatted.
+	 * @param korban Matrix that will be survey'd.
+	 * @return single digit maximum.
+	 */
+	public static int countSingleDigitSpace(Matrix korban){
+		int[][] matrixnya = korban.toIntArray();
+		
+		int maxSingleSize = 1, maxSize=matrixnya[0][0];
+		
+		// we will loop entire matrix's item to get it's maximum number and
+		// calculate the digit space required for it. Then store it into
+		// a temporary variable, which is will be returned to the caller.
+		for(int[] row : matrixnya){
+			for(int col : row){
+				if(col > maxSize || col < maxSize*-1){
+					maxSize = Math.abs(col);
+					maxSingleSize = getDigit(maxSize);
+					if(col < 0)
+						maxSingleSize++;
+				}
+			}
+		}
+		System.out.println("mSS: " + maxSingleSize);
+		return maxSingleSize;
+	}
+	
+	
+	/**
+	 * This will count the digit of the integer.
+	 * @param i digit that will be counted
+	 * @return digits
+	 */
+	public static int getDigit(int i){
+		int temp=1;
+		while((i /= 10) > 0)
+			temp++;
+		System.out.println("temp: " + temp  + " of " + i);
+		return temp;
+	}
+	
+	
+}

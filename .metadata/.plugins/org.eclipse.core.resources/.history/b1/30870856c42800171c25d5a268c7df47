@@ -1,0 +1,8 @@
+import MatrixUtil.*;
+
+public class Main {
+	public static void main(String[] args) {
+		Matrix x = new Matrix(new int[][] {{1,2,3}, {1,2,3}, {1,2,3}});
+		System.out.println(x);	
+	}
+}
