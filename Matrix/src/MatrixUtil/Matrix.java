@@ -1,7 +1,5 @@
 package MatrixUtil;
 
-import java.util.Arrays;
-
 /**
  * This class are used to store the Matrix and giving them some utility to play
  * with matrix that Ko Robyn have teach us.
@@ -11,7 +9,7 @@ import java.util.Arrays;
  * 
  * @version v0.1.1-alpha1
  * @author Chris(2016730011)
- * @author Irvan(201673077)
+ * @author Irvan(2016730077)
  *
  */
 public class Matrix {
@@ -19,12 +17,11 @@ public class Matrix {
 	 * Matrix storage system, use 2d array.
 	 */
 	private double[][] matrix;
-	
+
 	/**
-	 * Just a prettify settings
-	 * how significant the digit must be.
+	 * Just a prettify settings how significant the digit must be.
 	 */
-	public static int significantDigit=2;
+	public static int significantDigit = 2;
 
 	/**
 	 * Instantiate blank matrix
@@ -73,6 +70,74 @@ public class Matrix {
 	public void setValue(int row, int col, double value) throws IndexOutOfBoundsException {
 		matrix[row][col] = value;
 	}
+
+	
+	
+	
+	
+	
+	/*************** BASIC MATH REGION ***************/
+
+	/**
+	 * Multiply this matrix with a scalar of something.
+	 * 
+	 * @param skalar
+	 */
+	public void multiply(double skalar) {
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix[0].length; j++)
+				matrix[i][j] *= skalar;
+	}
+
+	/**
+	 * Add this matrix with a scalar of something.
+	 * 
+	 * @param skalar
+	 */
+	public void add(double skalar) {
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix[0].length; j++)
+				matrix[i][j] += skalar;
+	}
+
+	/**
+	 * Substract this matrix with a scalar of something.
+	 * 
+	 * @param skalar
+	 */
+	public void substract(double skalar) {
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix[0].length; j++)
+				matrix[i][j] -= skalar;
+	}
+
+	/**
+	 * Divide this matrix with a scalar of something.
+	 * 
+	 * @param skalar
+	 */
+	public void divide(double skalar) {
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix[0].length; j++)
+				matrix[i][j] /= skalar;
+	}
+	
+	
+	
+	
+	
+
+	/*************** SEMIBASIC MATH REGION ***************/
+	// @TODO add `add` operation with matrix
+	// @TODO add `multiply` operation with matrix
+	// @TODO add `division` operation with matrix
+
+	
+	
+	
+	
+	
+	/*************** MATRIX ONLY MATH REGION ***************/
 
 	/**
 	 * Get a submatrix version of the matrix. This will return new matrix
@@ -140,76 +205,6 @@ public class Matrix {
 	}
 
 	/**
-	 * Representate this matrix into an string.
-	 * 
-	 * @return matrix in well-formatted string.
-	 */
-	@Override
-	public String toString() {
-		String temp = "";
-
-		// item statement are used to generate format for the matrix.
-		String itemStatement = " %x.yf"
-				.replace("x", "" + (Prettify.countSingleDigitSpace(this) + Matrix.significantDigit + 2))
-				.replace("y", "" + Matrix.significantDigit);
-
-		for (double[] row : matrix) {
-			for (double col : row)
-				temp += String.format(itemStatement, col);
-			temp += "\n";
-		}
-
-		// this one are used to clean up those junks.
-		// if you need to know it's function, you can disable it,
-		// it's just kind of magic, here :D
-		return temp.replaceAll("[\\s\\n]+$", "");
-	}
-
-	/**
-	 * Multiply this matrix with a scalar of something.
-	 * 
-	 * @param skalar
-	 */
-	public void multiply(double skalar) {
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[0].length; j++)
-				matrix[i][j] *= skalar;
-	}
-
-	/**
-	 * Add this matrix with a scalar of something.
-	 * 
-	 * @param skalar
-	 */
-	public void add(double skalar) {
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[0].length; j++)
-				matrix[i][j] += skalar;
-	}
-
-	/**
-	 * Substract this matrix with a scalar of something.
-	 * 
-	 * @param skalar
-	 */
-	public void substract(double skalar) {
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[0].length; j++)
-				matrix[i][j] -= skalar;
-	}
-
-	/**
-	 * Divide this matrix with a scalar of something.
-	 * 
-	 * @param skalar
-	 */
-	public void divide(double skalar) {
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[0].length; j++)
-				matrix[i][j] /= skalar;
-	}
-
-	/**
 	 * Transposing this matrix.
 	 * 
 	 * @return transposed Matrix.
@@ -262,11 +257,48 @@ public class Matrix {
 		temp.transpose();
 
 		// multiply it with the determinant.
-		temp.multiply(1/this.getDeterminant());
+		temp.multiply(1 / this.getDeterminant());
 
 		return temp;
 	}
 
+	
+	
+	
+	
+	
+	/*************** JAVA OBJECT SPECIFICATION REGION ***************/
+	/**
+	 * Representate this matrix into an string.
+	 * 
+	 * @return matrix in well-formatted string.
+	 */
+	@Override
+	public String toString() {
+		String temp = "";
+
+		// item statement are used to generate format for the matrix.
+		String itemStatement = " %x.yf"
+				.replace("x", "" + (Prettify.countSingleDigitSpace(this) + Matrix.significantDigit + 2))
+				.replace("y", "" + Matrix.significantDigit);
+
+		for (double[] row : matrix) {
+			for (double col : row)
+				temp += String.format(itemStatement, col);
+			temp += "\n";
+		}
+
+		// this one are used to clean up those junks.
+		// if you need to know it's function, you can disable it,
+		// it's just kind of magic, here :D
+		return temp.replaceAll("[\\s\\n]+$", "");
+	}
+
+	
+	
+	
+	
+	
 	/*************** STATIC METHOD REGION ***************/
 
 	/**

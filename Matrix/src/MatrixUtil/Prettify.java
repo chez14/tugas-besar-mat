@@ -4,7 +4,7 @@ package MatrixUtil;
  * 
  * @version v0.1.1-alpha1
  * @author Chris(2016730011)
- * @author Irvan(201673077)
+ * @author Irvan(2016730077)
  */
 final class Prettify {
 	/**
