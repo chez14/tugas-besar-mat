@@ -16,7 +16,7 @@ public class Matrix {
 	/**
 	 * Matrix storage system, use 2d array.
 	 */
-	private double[][] matrix;
+	protected double[][] matrix;
 
 	/**
 	 * Just a prettify settings how significant the digit must be.
@@ -147,12 +147,9 @@ public class Matrix {
 	 *            row should be avoided
 	 * @param m
 	 *            column should be avoided
-	 * @return
+	 * @return submatrix of this matrix on m,n.
 	 */
 	private Matrix getSubmatrix(int m, int n) {
-		if (matrix.length < 3 || matrix[0].length < 3)
-			return null;
-
 		Matrix x = new Matrix(matrix.length - 1, matrix[0].length - 1);
 
 		for (int i = 0, row = 0; i < matrix.length; i++) {
@@ -165,7 +162,7 @@ public class Matrix {
 			}
 			row++;
 		}
-
+		
 		return x;
 	}
 
@@ -180,7 +177,9 @@ public class Matrix {
 		Matrix x = new Matrix(matrix.length, matrix[0].length);
 		for (int i = 0; i < matrix.length; i++)
 			for (int j = 0; j < matrix.length; j++)
-				x.setValue(i, j, ((i + j) % 2 == 0 ? 1 : -1) * getSubmatrix(i, j).getDeterminant());
+				x.setValue(i, j, (
+						(i + j) % 2 == 0 ? 1 : -1) * getSubmatrix(i, j).getDeterminant()
+					);
 		return x;
 	}
 
@@ -193,10 +192,10 @@ public class Matrix {
 	public double getDeterminant() throws InvalidMoveException {
 		if (matrix.length != matrix[0].length)
 			throw new InvalidMoveException("Unable to calculate the determinant, it's not n x n matix.");
-
-		if (matrix.length == 2 && matrix[0].length == 2)
-			return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-
+		
+		if(matrix.length == 1)
+			return matrix[0][0];
+		
 		int temp = 0;
 		for (int i = 0; i < matrix.length; i++)
 			temp += (i % 2 == 1 ? -1 : 1) * matrix[i][0] * getSubmatrix(i, 0).getDeterminant();
@@ -204,6 +203,20 @@ public class Matrix {
 		return temp;
 	}
 
+
+	/**
+	 * Transposing a cloned version of this matrix.
+	 * 
+	 * @return new transposed matrix
+	 */
+	public Matrix getTranspose() {
+		double[][] jadi = new double[matrix[0].length][matrix.length];
+		for (int i = 0; i < jadi.length; i++)
+			for (int j = 0; j < jadi[0].length; j++)
+				jadi[i][j] = matrix[j][i];
+		return new Matrix(jadi);
+	}
+	
 	/**
 	 * Transposing this matrix.
 	 * 
@@ -214,37 +227,18 @@ public class Matrix {
 	}
 
 	/**
-	 * Transposing a cloned version of this matrix.
-	 * 
-	 * @return
-	 */
-	public Matrix getTranspose() {
-		double[][] jadi = new double[matrix[0].length][matrix.length];
-		for (int i = 0; i < jadi.length; i++)
-			for (int j = 0; j < jadi[0].length; j++)
-				jadi[i][j] = matrix[j][i];
-		return new Matrix(jadi);
-	}
-
-	/**
-	 * Inverse this matrix.
-	 * 
-	 * @return
-	 * @throws InvalidMoveException
-	 */
-	public void inverse() throws InvalidMoveException {
-		this.matrix = getInverse().toIntArray();
-	}
-
-	/**
 	 * Inverse the cloned version of this matrix.
 	 * 
-	 * @return
+	 * @return new inversed matrix
 	 * @throws InvalidMoveException
 	 */
 	public Matrix getInverse() throws InvalidMoveException {
 		Matrix temp = null;
-
+		double determinant = this.getDeterminant();
+		
+		if(determinant==0)
+			throw new InvalidMoveException("The matrix are singular, and doesn't have any inverse.");
+		
 		// getting the cofactor matrix
 		try {
 			temp = this.getCofactor();
@@ -257,12 +251,51 @@ public class Matrix {
 		temp.transpose();
 
 		// multiply it with the determinant.
-		temp.multiply(1 / this.getDeterminant());
+		temp.multiply(1 / determinant);
 
 		return temp;
 	}
 
+	/**
+	 * Inverse this matrix.
+	 * 
+	 * @throws InvalidMoveException
+	 */
+	public void inverse() throws InvalidMoveException {
+		this.matrix = getInverse().toIntArray();
+	}
+
 	
+	
+	
+	
+	/*************** CONFIRMATOR REGION ***************/
+	
+	/**
+	 * Checks if this is a singular Matrix.
+	 * 
+	 * @return true if it's singular.
+	 */
+	public boolean isSingularMatrix(){
+		try {
+			return this.getDeterminant() == 0;
+		} catch (InvalidMoveException e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Checks if this matrix can be inversed.
+	 * 
+	 * @return true if it's inversable.
+	 */
+	public boolean isInversable() {
+		try {
+			return !(this.getDeterminant() == 0);
+		} catch (InvalidMoveException e) {
+			return false;
+		}
+	}
 	
 	
 	

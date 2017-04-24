@@ -30,7 +30,6 @@ final class Prettify {
 				}
 			}
 		}
-		System.out.println("MSS: " + maxSingleSize);
 		// just in case if there's -24 and 30.
 		return maxSingleSize + 1;
 	}
@@ -47,7 +46,6 @@ final class Prettify {
 		while((i=Math.floor(i/10)) > 0)
 			temp++;
 		
-		System.out.println("Length: " + temp);
 		return temp;
 	}
 	
