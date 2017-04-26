@@ -9,7 +9,7 @@ package MatrixUtil;
  * 
  * @version v0.1.1-alpha1
  * @author Chris(2016730011)
- * @author Irvan(2016730077)
+ * @author Irvan(2016730070)
  *
  */
 public class Matrix {
@@ -82,6 +82,7 @@ public class Matrix {
 	 * Multiply this matrix with a scalar of something.
 	 * 
 	 * @param skalar
+	 * 			skalar number that will be used to multiply the matrix
 	 */
 	public void multiply(double skalar) {
 		for (int i = 0; i < matrix.length; i++)
@@ -93,6 +94,7 @@ public class Matrix {
 	 * Add this matrix with a scalar of something.
 	 * 
 	 * @param skalar
+	 * 			skalar number that used to add the matrix
 	 */
 	public void add(double skalar) {
 		for (int i = 0; i < matrix.length; i++)
@@ -104,6 +106,7 @@ public class Matrix {
 	 * Substract this matrix with a scalar of something.
 	 * 
 	 * @param skalar
+	 * 			skalar number that used to substract the matrix
 	 */
 	public void substract(double skalar) {
 		for (int i = 0; i < matrix.length; i++)
@@ -115,6 +118,7 @@ public class Matrix {
 	 * Divide this matrix with a scalar of something.
 	 * 
 	 * @param skalar
+	 * 			skalar number that used to divide the matrix.
 	 */
 	public void divide(double skalar) {
 		for (int i = 0; i < matrix.length; i++)
@@ -170,10 +174,10 @@ public class Matrix {
 	 * Get the cofactor matrix of this matrix.
 	 * 
 	 * @return Cofactor Matrix.
-	 * @throws IndexOutOfBoundsException
 	 * @throws InvalidMoveException
+	 * 			When the matrix are not n x n, this method will throw an invalid move exception.
 	 */
-	public Matrix getCofactor() throws IndexOutOfBoundsException, InvalidMoveException {
+	public Matrix getCofactor() throws InvalidMoveException {
 		Matrix x = new Matrix(matrix.length, matrix[0].length);
 		for (int i = 0; i < matrix.length; i++)
 			for (int j = 0; j < matrix.length; j++)
@@ -188,6 +192,7 @@ public class Matrix {
 	 * 
 	 * @return determinant
 	 * @throws InvalidMoveException
+	 * 			When the matrix are not n x n, the matrix's determinant cannot be determined.
 	 */
 	public double getDeterminant() throws InvalidMoveException {
 		if (matrix.length != matrix[0].length)
@@ -196,7 +201,7 @@ public class Matrix {
 		if(matrix.length == 1)
 			return matrix[0][0];
 		
-		int temp = 0;
+		double temp = 0;
 		for (int i = 0; i < matrix.length; i++)
 			temp += (i % 2 == 1 ? -1 : 1) * matrix[i][0] * getSubmatrix(i, 0).getDeterminant();
 
@@ -231,6 +236,9 @@ public class Matrix {
 	 * 
 	 * @return new inversed matrix
 	 * @throws InvalidMoveException
+	 * 			On singular matrix, we couldn't find the inverse of this matrix.
+	 *          So current process cannot be done, and throwing an InvalidMoveException
+	 *          instead.
 	 */
 	public Matrix getInverse() throws InvalidMoveException {
 		Matrix temp = null;
