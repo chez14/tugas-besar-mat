@@ -1,3 +1,5 @@
 .recommenders/
 .metadata/
 *.class
+/TBM4_DeterminantOfInverse/nbproject/private/
+/TBM4_DeterminantOfInverse/build/
