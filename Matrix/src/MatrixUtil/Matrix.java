@@ -50,7 +50,7 @@ public class Matrix {
 	 * 
 	 * @return Matrix on 2D array.
 	 */
-	public double[][] toIntArray() {
+	public double[][] toDoubleArray() {
 		return matrix;
 	}
 
@@ -71,7 +71,15 @@ public class Matrix {
 		matrix[row][col] = value;
 	}
 
-	
+	/**
+	 * Set all those values from array. 
+	 * This is considered as something dangerous.
+	 * @param values 2 dimension array of the matris.
+	 * @see toDoubleArray
+	 */
+	public void setValues(double[][] values) {
+		matrix = values;
+	}
 	
 	
 	
@@ -228,7 +236,7 @@ public class Matrix {
 	 * @return transposed Matrix.
 	 */
 	public void transpose() {
-		this.matrix = getTranspose().toIntArray();
+		this.matrix = getTranspose().toDoubleArray();
 	}
 
 	/**
@@ -270,7 +278,7 @@ public class Matrix {
 	 * @throws InvalidMoveException
 	 */
 	public void inverse() throws InvalidMoveException {
-		this.matrix = getInverse().toIntArray();
+		this.matrix = getInverse().toDoubleArray();
 	}
 
 	

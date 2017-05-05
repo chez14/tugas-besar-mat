@@ -153,7 +153,7 @@ public class Matrix {
 	 *            column should be avoided
 	 * @return submatrix of this matrix on m,n.
 	 */
-	private Matrix getSubmatrix(int m, int n) {
+	protected Matrix getSubmatrix(int m, int n) {
 		Matrix x = new Matrix(matrix.length - 1, matrix[0].length - 1);
 
 		for (int i = 0, row = 0; i < matrix.length; i++) {

@@ -1,11 +1,23 @@
 
+/**
+ * Kelompok: Skywrath_Mage
+ * Program : Determinant Of Inverse
+ *
+ * Nama: Irvan Hardyanto
+ * NPM: 2016730070
+ * Program Studi: Teknik Informatika
+ * Kelas: A
+ * FTIS, UNPAR
+ *
+ * Nama: Gunawan Christianto
+ * NPM: 2016730011
+ * Program Studi: Teknik Informatika
+ * Kelas: A
+ * FTIS, UNPAR
+ */
 import MatrixUtil.*;
 import java.util.Scanner;
 
-/**
- *
- * @author hayashi
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -22,14 +34,16 @@ public class Main {
                 for (int j = 0; j < size; j++) {
                     korban.setValue(i, j, in.nextDouble());
                 }
-                if(!(size <= 1+i))
+                if (!(size <= 1 + i)) {
                     System.out.println("OK! Baris " + (i + 2) + "?");
+                }
             }
-            
-            
+
             System.out.println("\nPreview matriks:");
             System.out.println(korban + "\n");
+
             try {
+                System.out.println("Determinan: " + korban.getDeterminant());
                 Matrix inversed = korban.getInverse();
                 System.out.println("Bukan matriks singular");
                 System.out.println("Berikut matriks inversenya:");
