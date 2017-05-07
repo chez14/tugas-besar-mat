@@ -50,7 +50,7 @@ public class Matrix {
 	 * 
 	 * @return Matrix on 2D array.
 	 */
-	public double[][] toIntArray() {
+	public double[][] toDoubleArray() {
 		return matrix;
 	}
 
@@ -71,8 +71,20 @@ public class Matrix {
 		matrix[row][col] = value;
 	}
 
+	/**
+	 * Set all those values from array. 
+	 * This is considered as something dangerous.
+	 * @param values 2 dimension array of the matris.
+	 * @see toDoubleArray
+	 */
+	public void setValues(double[][] values) {
+		matrix = values;
+	}
 	
-	
+        
+        public double getValue(int row, int col){
+            return matrix[row][col];
+        }
 	
 	
 	
@@ -153,7 +165,7 @@ public class Matrix {
 	 *            column should be avoided
 	 * @return submatrix of this matrix on m,n.
 	 */
-	protected Matrix getSubmatrix(int m, int n) {
+	private Matrix getSubmatrix(int m, int n) {
 		Matrix x = new Matrix(matrix.length - 1, matrix[0].length - 1);
 
 		for (int i = 0, row = 0; i < matrix.length; i++) {
@@ -228,7 +240,7 @@ public class Matrix {
 	 * @return transposed Matrix.
 	 */
 	public void transpose() {
-		this.matrix = getTranspose().toIntArray();
+		this.matrix = getTranspose().toDoubleArray();
 	}
 
 	/**
@@ -270,7 +282,7 @@ public class Matrix {
 	 * @throws InvalidMoveException
 	 */
 	public void inverse() throws InvalidMoveException {
-		this.matrix = getInverse().toIntArray();
+		this.matrix = getInverse().toDoubleArray();
 	}
 
 	

@@ -20,6 +20,19 @@ public class CramerMatrix extends MatrixUtil.Matrix {
 	}
 
 	/**
+	 * Constructor for this class.
+	 * 
+	 * @param values
+	 *            Matrix object that holds the equation's value.
+	 * @param constants
+	 *            Constants that remined behind the equal symbol.
+	 */
+	public CramerMatrix(Matrix values, double[] constants) {
+		super(values.toDoubleArray());
+		this.constants = constants;
+	}
+
+	/**
 	 * Generate Cramer matrix for respected values.
 	 * 
 	 * @param colNum
@@ -44,21 +57,32 @@ public class CramerMatrix extends MatrixUtil.Matrix {
 	 * @throws InvalidMoveException
 	 *             When the matrix are not square or it's determinant are 0,
 	 *             This exception will be thrown.
-	 * @throws UnsolveableEquationsException 
+	 * @throws UnsolveableEquationsException
+	 * @throws InfiniteSolutionException
 	 */
-	public double[] getSolution() throws InvalidMoveException, UnsolveableEquationsException {
+	public double[] getSolution()
+			throws InvalidMoveException, UnsolveableEquationsException, InfiniteSolutionException {
 		double[] hasil = new double[matrix[0].length];
 		double det = getDeterminant();
-		if (det == 0)
-			throw new UnsolveableEquationsException("The matrix's determinant are 0. So it's solution are infinite.");
-		for (int i = 0; i < matrix[0].length; i++)
-			hasil[i] = generateIthMatrix(i).getDeterminant() / det;
+		boolean indefiniteFlag = false;
+		for (int i = 0; i < matrix[0].length; i++) {
+			hasil[i] = generateIthMatrix(i).getDeterminant();
+			if (det == 0)
+				if (hasil[i] != 0)
+					throw new UnsolveableEquationsException("This matrix has no solution.");
+				else
+					indefiniteFlag = true;
+			hasil[i] /= det;
+		}
+		if (indefiniteFlag)
+			throw new InfiniteSolutionException("The eqaution has Indefenitely many solution.");
 
 		return hasil;
 	}
-	
+
 	/**
 	 * Cast this object to Matrix, yup, it's parent.
+	 * 
 	 * @return new Matrix
 	 */
 	public Matrix toMatrix() {

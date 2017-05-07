@@ -3,17 +3,13 @@
  * Kelompok: Skywrath_Mage
  * Program : Determinant Of Inverse
  *
- * Nama: Irvan Hardyanto
- * NPM: 2016730070
- * Program Studi: Teknik Informatika
- * Kelas: A
- * FTIS, UNPAR
+ * Nama01: Irvan Hardyanto
+ * NPM01: 2016730070
+ * Kelas01: A
  *
- * Nama: Gunawan Christianto
- * NPM: 2016730011
- * Program Studi: Teknik Informatika
- * Kelas: A
- * FTIS, UNPAR
+ * Nama02: Gunawan Christianto
+ * NPM02: 2016730011
+ * Kelas02: A
  */
 import MatrixUtil.*;
 import java.util.Scanner;
@@ -45,11 +41,11 @@ public class Main {
             try {
                 System.out.println("Determinan: " + korban.getDeterminant());
                 Matrix inversed = korban.getInverse();
-                System.out.println("Bukan matriks singular");
+                System.out.println(">  Bukan matriks singular.");
                 System.out.println("Berikut matriks inversenya:");
                 System.out.println(inversed);
             } catch (InvalidMoveException e) {
-                System.out.println("Matriks singular");
+                System.out.println(">  Matriks singular.");
                 System.out.println("Matriks tidak memiliki inverse.");
             } finally {
                 System.out.println("\nRepeat? (Yes=y,1; No=n,0)");

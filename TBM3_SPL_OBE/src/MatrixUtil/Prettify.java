@@ -14,7 +14,7 @@ final class Prettify {
 	 * @return single digit maximum.
 	 */
 	public static int countSingleDigitSpace(Matrix korban){
-		double[][] matrixnya = korban.toIntArray();
+		double[][] matrixnya = korban.toDoubleArray();
 		
 		int maxSingleSize = 1;
 		double maxSize=matrixnya[0][0];

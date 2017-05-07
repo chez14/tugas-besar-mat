@@ -29,6 +29,18 @@ public class OBEMatrix {
 	}
 
 	/**
+	 * Constructor for this class.
+	 * 
+	 * @param values
+	 *            Matrix object that holds the equation's value.
+	 * @param constants
+	 *            Constants that remined behind the equal symbol.
+	 */
+	public OBEMatrix(Matrix values, double[] constants) {
+		this(values.toDoubleArray(), constants);
+	}
+
+	/**
 	 * Substract the targeted OBE matrix with it's substractor
 	 * 
 	 * @param target
@@ -42,8 +54,8 @@ public class OBEMatrix {
 	 *             When the index value are not in bounds, this exception will
 	 *             be thrown
 	 */
-	public void substract(int target, int substractor, double scalar) throws ArrayIndexOutOfBoundsException {
-		rows[target].substract(rows[substractor], scalar);
+	public void add(int target, int substractor, double scalar) throws ArrayIndexOutOfBoundsException {
+		rows[target].add(rows[substractor], scalar);
 	}
 
 	/**
@@ -58,8 +70,8 @@ public class OBEMatrix {
 	 *             When the index value are not in bounds, this exception will
 	 *             be thrown
 	 */
-	public void substract(int target, int substractor) throws ArrayIndexOutOfBoundsException {
-		substract(target, substractor, 1);
+	public void add(int target, int substractor) throws ArrayIndexOutOfBoundsException {
+		add(target, substractor, 1);
 	}
 
 	/**
@@ -83,7 +95,7 @@ public class OBEMatrix {
 	 * Multiplies the selected index with a scalar.
 	 * 
 	 * @param index
-	 *            Targetted index
+	 *            Targeted index
 	 * @param scalar
 	 *            Scalar values that will be multiplied
 	 * @throws ArrayIndexOutOfBoundsException
@@ -109,11 +121,77 @@ public class OBEMatrix {
 	}
 	
 	/**
+	 * Return the solved qeuation's solution.
+	 * 
+	 * @return Solution of the respected variables.
+	 * @throws UnableToSolveException then the equation cannot be solved, then this error will be returned.
+	 */
+	public double[] getSolution() throws UnableToSolveException {
+		if(!isMEBT())
+			throw new UnableToSolveException("MEBT is required to solve the equation");
+		return constants;
+	}
+
+	/**
 	 * Check on current move, is it might have a chance to get the solution.
-	 * @return -1 on it has infinitely many solution, 0 on no solution and 1 on has only 1 solution.
+	 * 
+	 * @return -1 on it has infinitely many solution, 0 on no solution and 1 on
+	 *         has only 1 solution.
 	 */
 	public int detectSolution() {
-		
+		if (!detectHasSolution())
+			return 0;
+		return (detectSingleSolution() ? 1 : -1);
+	}
+
+	/**
+	 * Detect if it has solution or not. This method are responsible for
+	 * returning `0` on the detectSolution method.
+	 * 
+	 * @return
+	 */
+	private boolean detectHasSolution() {
+		double hasil = 0;
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < values.length; j++)
+				hasil += values[i][j];
+			if (hasil == 0 && constants[i] != 0)
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * We'll detect the matrix and check if it has single solution. If it's
+	 * possible to find the single solution, we'll report it to you.
+	 * 
+	 * @return true if it has single solution.
+	 */
+	private boolean detectSingleSolution() {
+		resync();
+		for (int j = 0; j < values.length - 2; j++)
+			for (int i = j; i < values.length - 1; i++)
+				if (!detectRowRatioConsistant(i, i + 1))
+					return false;
+		return true;
+	}
+
+	/**
+	 * Detect the ratio consistency of the those column.
+	 * 
+	 * @param rowA
+	 *            row A
+	 * @param rowB
+	 *            row B
+	 * @return true if it's consistent
+	 */
+	private boolean detectRowRatioConsistant(int rowA, int rowB) {
+		resync();
+		double ratio = values[rowA][0] / values[rowB][0];
+		for (int j = 1; j < values[0].length; j++)
+			if ((values[rowA][j] / values[rowB][j]) != ratio)
+				return false;
+		return true;
 	}
 
 	/**
@@ -121,12 +199,11 @@ public class OBEMatrix {
 	 */
 	private void resync() {
 		for (int i = 0; i < rows.length; i++) {
-			values[i] = rows[i].toDoubleArray();
+			values[i] = rows[i].toDoubleArray(true);
 			constants[i] = rows[i].getConstant();
 		}
 		thisIsJustAnInternalMatrix.setValues(values);
 	}
-	
 
 	/**
 	 * Represent current object to a beautifully formatted string. By resync all
